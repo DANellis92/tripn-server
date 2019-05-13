@@ -32,6 +32,15 @@ router.get("/mytrips", validateSession, (req, res) => {
     .then(trips => res.status(200).json(trips))
     .catch(err => res.status(500).json({ error: err }));
 });
+//Get One trip//
+router.get("/thistrip/:id", validateSession, (req, res) => {
+  trip
+    .findOne({
+      where: { userId: req.user.id, id: req.body.id }
+    })
+    .then(trips => res.status(200).json(trips))
+    .catch(err => res.status(500).json({ error: err }));
+});
 
 //Get all trips//
 router.get("/alltrips", validateSession, (req, res) => {
