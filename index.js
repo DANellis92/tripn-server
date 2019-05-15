@@ -7,7 +7,7 @@ var trips = require("./controllers/trip-controller");
 var sequelize = require("./db");
 var bodyParser = require("body-parser");
 
-sequelize.sync();
+sequelize.sync(true);
 
 app.use(bodyParser.json());
 
