@@ -29,7 +29,7 @@ router.get("/mytrips", validateSession, (req, res) => {
   trip
     .findAll({
       where: { userId: req.user.id },
-      order: '"id" , DESC'
+      order: '"trip.id" , DESC'
     })
     .then(trips => res.status(200).json(trips))
     .catch(err => res.status(500).json({ error: err }));
