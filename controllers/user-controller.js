@@ -77,7 +77,7 @@ router.delete("/adminuserdelete/:id", validateSession, (req, res) => {
 });
 
 //Get all Users
-router.get("/allusers", validateSession, (req, res) => {
+router.get("/allusers", (req, res) => {
   user
     .findAll()
     .then(users => res.status(200).json(users))
