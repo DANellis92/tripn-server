@@ -9,7 +9,8 @@ router.post("/create", validateSession, (req, res) => {
   trip
     .create({
       tripName: req.body.trip.tripName,
-      date: req.body.trip.date,
+      startDate: req.body.trip.startDate,
+      endDate: req.body.trip.endDate,
       distance: req.body.trip.distance,
       userId: req.user.id
     })
@@ -27,7 +28,8 @@ router.post("/create", validateSession, (req, res) => {
 router.get("/mytrips", validateSession, (req, res) => {
   trip
     .findAll({
-      where: { userId: req.user.id }
+      where: { userId: req.user.id },
+      order: [[" id ", "DESC"]]
     })
     .then(trips => res.status(200).json(trips))
     .catch(err => res.status(500).json({ error: err }));

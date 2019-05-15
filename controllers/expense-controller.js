@@ -5,7 +5,7 @@ var expenses = sequelize.import("../models/expense-model");
 const validateSession = require("../middleware/validate-session");
 
 //Create Expense//
-router.post("/createExpense/:id", validateSession, (req, res) => {
+router.post("/createExpense/:tripId", validateSession, (req, res) => {
   expenses
     .create({
       date: req.body.expenses.date,
@@ -41,7 +41,8 @@ router.put("/edit/:id", validateSession, (req, res) => {
 router.get("/tripexpenses", validateSession, (req, res) => {
   expenses
     .findAll({
-      where: { owner: req.user.id } ///owner??
+      where: { userId: req.user.id },
+      order: [["id", "DESC"]]
     })
     .then(expenses => res.status(200).json(expenses))
     .catch(err => res.status(500).json({ error: err }));
