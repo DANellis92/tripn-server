@@ -27,7 +27,7 @@ router.post("/createExpense/:tripId", validateSession, (req, res) => {
 });
 
 //Update Expense//
-router.put("/edit/:id", validateSession, (req, res) => {
+router.put("/edit/:tripId/:id", validateSession, (req, res) => {
   expenses
     .update(req.body.expenses, {
       where: { id: req.params.id, tripId: req.trip.id }
@@ -38,18 +38,17 @@ router.put("/edit/:id", validateSession, (req, res) => {
 });
 
 //Get my Expenses//
-router.get("/tripexpenses", validateSession, (req, res) => {
+router.get("/tripexpenses/:tripId/userId", validateSession, (req, res) => {
   expenses
     .findAll({
-      where: { userId: req.user.id },
-      order: [["id", "DESC"]]
+      where: { tripId: req.params.tripId, userId: req.params.userId }
     })
     .then(expenses => res.status(200).json(expenses))
     .catch(err => res.status(500).json({ error: err }));
 });
 
 //Delete Expense
-router.delete("/delete/:id", validateSession, (req, res) => {
+router.delete("/delete/:tripId/:id", validateSession, (req, res) => {
   expenses
     .destroy({ where: { id: req.params.id, tripId: req.trip.id } }) ///params
     .then(
