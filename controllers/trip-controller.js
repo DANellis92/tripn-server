@@ -37,7 +37,7 @@ router.get("/mytrips", validateSession, (req, res) => {
 router.get("/thistrip/:id", validateSession, (req, res) => {
   trip
     .findOne({
-      where: { userId: req.user.id, id: req.body.id }
+      where: { userId: req.user.id, id: req.params.id }
     })
     .then(trips => res.status(200).json(trips))
     .catch(err => res.status(500).json({ error: err }));
